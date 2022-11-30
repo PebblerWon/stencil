@@ -1538,12 +1538,12 @@ export type RuntimeRef = HostElement | {};
  * Interface used to track an Element, it's virtual Node (`VNode`), and other data
  */
 export interface HostRef {
-  $ancestorComponent$?: HostElement;
+  $ancestorComponent$?: WeakRef<HostElement>;
   $flags$: number;
   $cmpMeta$: ComponentRuntimeMeta;
-  $hostElement$: HostElement;
+  $hostElement$?: WeakRef<HostElement>;
   $instanceValues$?: Map<string, any>;
-  $lazyInstance$?: ComponentInterface;
+  $lazyInstance$?: WeakRef<ComponentInterface>;
   /**
    * A promise that gets resolved if `BUILD.asyncLoading` is enabled and after the `componentDidLoad`
    * and before the `componentDidUpdate` lifecycle events are triggered.

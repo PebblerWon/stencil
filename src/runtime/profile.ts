@@ -42,7 +42,8 @@ const inspect = (ref: any) => {
     return undefined;
   }
   const flags = hostRef.$flags$;
-  const hostElement = hostRef.$hostElement$;
+  const hostElement = hostRef.$hostElement$?.deref();
+
   return {
     renderCount: hostRef.$renderCount$,
     flags: {
@@ -58,9 +59,9 @@ const inspect = (ref: any) => {
       needsRerender: !!(flags & HOST_FLAGS.needsRerender),
     },
     instanceValues: hostRef.$instanceValues$,
-    ancestorComponent: hostRef.$ancestorComponent$,
+    ancestorComponent: hostRef.$ancestorComponent$?.deref(),
     hostElement,
-    lazyInstance: hostRef.$lazyInstance$,
+    lazyInstance: hostRef.$lazyInstance$?.deref(),
     vnode: hostRef.$vnode$,
     modeName: hostRef.$modeName$,
     onReadyPromise: hostRef.$onReadyPromise$,
@@ -70,12 +71,12 @@ const inspect = (ref: any) => {
     onRenderResolve: hostRef.$onRenderResolve$,
     queuedListeners: hostRef.$queuedListeners$,
     rmListeners: hostRef.$rmListeners$,
-    ['s-id']: hostElement['s-id'],
-    ['s-cr']: hostElement['s-cr'],
-    ['s-lr']: hostElement['s-lr'],
-    ['s-p']: hostElement['s-p'],
-    ['s-rc']: hostElement['s-rc'],
-    ['s-sc']: hostElement['s-sc'],
+    ['s-id']: hostElement?.['s-id'],
+    ['s-cr']: hostElement?.['s-cr'],
+    ['s-lr']: hostElement?.['s-lr'],
+    ['s-p']: hostElement?.['s-p'],
+    ['s-rc']: hostElement?.['s-rc'],
+    ['s-sc']: hostElement?.['s-sc'],
   };
 };
 

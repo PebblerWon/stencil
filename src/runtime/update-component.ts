@@ -23,7 +23,7 @@ export const scheduleUpdate = (hostRef: d.HostRef, isInitialLoad: boolean) => {
     hostRef.$flags$ |= HOST_FLAGS.needsRerender;
     return;
   }
-  attachToAncestor(hostRef, hostRef.$ancestorComponent$);
+  attachToAncestor(hostRef, hostRef.$ancestorComponent$?.deref());
 
   // there is no ancestor component or the ancestor component
   // has already fired off its lifecycle update then
@@ -43,9 +43,14 @@ export const scheduleUpdate = (hostRef: d.HostRef, isInitialLoad: boolean) => {
  * the component
  */
 const dispatchHooks = (hostRef: d.HostRef, isInitialLoad: boolean): Promise<void> => {
-  const elm = hostRef.$hostElement$;
+  const elm = hostRef.$hostElement$.deref();
+  if (elm === undefined) {
+    // the GC's already done its grim work, we should bow out
+    return undefined;
+  }
+
   const endSchedule = createTime('scheduleUpdate', hostRef.$cmpMeta$.$tagName$);
-  const instance = BUILD.lazyLoad ? hostRef.$lazyInstance$ : elm;
+  const instance = BUILD.lazyLoad ? hostRef.$lazyInstance$.deref() : elm;
 
   // We're going to use this variable together with `enqueue` to implement a
   // little promise-based queue. We start out with it `undefined`. When we add
@@ -149,7 +154,13 @@ const updateComponent = async (
   instance: d.HostElement | d.ComponentInterface,
   isInitialLoad: boolean,
 ) => {
-  const elm = hostRef.$hostElement$ as d.RenderNode;
+  const elm = hostRef.$hostElement$.deref() as d.RenderNode;
+
+  if (elm === undefined) {
+    // DOM node got GC'ed, we gotta bail!
+    return;
+  }
+
   const endUpdate = createTime('update', hostRef.$cmpMeta$.$tagName$);
   const rc = elm['s-rc'];
   if (BUILD.style && isInitialLoad) {
@@ -246,7 +257,7 @@ const callRender = (hostRef: d.HostRef, instance: any, elm: HTMLElement, isIniti
      * minification optimization: `allRenderFn` is `true` if all components have a `render`
      * method, so we can call the method immediately. If not, check before calling it.
      */
-    instance = allRenderFn ? instance.render() : instance.render && instance.render();
+    instance = allRenderFn ? instance?.render() : instance.render && instance.render();
 
     if (updatable && taskQueue) {
       hostRef.$flags$ &= ~HOST_FLAGS.isQueuedForUpdate;
@@ -275,7 +286,7 @@ const callRender = (hostRef: d.HostRef, instance: any, elm: HTMLElement, isIniti
       }
     }
   } catch (e) {
-    consoleError(e, hostRef.$hostElement$);
+    consoleError(e, hostRef.$hostElement$.deref());
   }
   renderingRef = null;
   return null;
@@ -285,10 +296,16 @@ export const getRenderingRef = () => renderingRef;
 
 export const postUpdateComponent = (hostRef: d.HostRef) => {
   const tagName = hostRef.$cmpMeta$.$tagName$;
-  const elm = hostRef.$hostElement$;
+  const elm = hostRef.$hostElement$.deref();
+
+  if (elm === undefined) {
+    // DOM node got GC'ed, let's bail
+    return;
+  }
+
   const endPostUpdate = createTime('postUpdate', tagName);
-  const instance = BUILD.lazyLoad ? hostRef.$lazyInstance$ : (elm as any);
-  const ancestorComponent = hostRef.$ancestorComponent$;
+  const instance = BUILD.lazyLoad ? hostRef.$lazyInstance$.deref() : (elm as any);
+  const ancestorComponent = hostRef.$ancestorComponent$?.deref();
 
   if (BUILD.cmpDidRender) {
     if (BUILD.isDev) {
@@ -323,7 +340,7 @@ export const postUpdateComponent = (hostRef: d.HostRef) => {
     endPostUpdate();
 
     if (BUILD.asyncLoading) {
-      hostRef.$onReadyResolve$(elm);
+      hostRef.$onReadyResolve$(new WeakRef(elm));
       if (!ancestorComponent) {
         appDidLoad(tagName);
       }
@@ -366,10 +383,11 @@ export const postUpdateComponent = (hostRef: d.HostRef) => {
   // (⌐■_■)
 };
 
-export const forceUpdate = (ref: any) => {
+export const forceUpdate = (ref: any): boolean => {
   if (BUILD.updatable && (Build.isBrowser || Build.isTesting)) {
     const hostRef = getHostRef(ref);
-    const isConnected = hostRef.$hostElement$.isConnected;
+    const hostEl = hostRef.$hostElement$.deref();
+    const isConnected = hostEl?.isConnected ?? false;
     if (
       isConnected &&
       (hostRef.$flags$ & (HOST_FLAGS.hasRendered | HOST_FLAGS.isQueuedForUpdate)) === HOST_FLAGS.hasRendered

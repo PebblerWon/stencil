@@ -46,12 +46,15 @@ const hostListenerProxy = (hostRef: d.HostRef, methodName: string) => (ev: Event
     if (BUILD.lazyLoad) {
       if (hostRef.$flags$ & HOST_FLAGS.isListenReady) {
         // instance is ready, let's call it's member method for this event
-        hostRef.$lazyInstance$[methodName](ev);
+        const lazyInstance = hostRef.$lazyInstance$.deref();
+        if (lazyInstance) {
+          lazyInstance[methodName](ev);
+        }
       } else {
         (hostRef.$queuedListeners$ = hostRef.$queuedListeners$ || []).push([methodName, ev]);
       }
     } else {
-      (hostRef.$hostElement$ as any)[methodName](ev);
+      (hostRef.$hostElement$.deref() as any)[methodName](ev);
     }
   } catch (e) {
     consoleError(e);
