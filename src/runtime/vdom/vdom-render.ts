@@ -12,6 +12,7 @@ import { CMP_FLAGS, HTML_NS, isDef, SVG_NS } from '@utils';
 
 import type * as d from '../../declarations';
 import { NODE_TYPE, PLATFORM_FLAGS, VNODE_FLAGS } from '../runtime-constants';
+import { HOST_ELEMENT_TAG_NAME, ORIGINAL_LOCATION_REFERENCE } from './constants';
 import { h, isHost, newVNode } from './h';
 import { updateElement } from './update-element';
 
@@ -136,7 +137,7 @@ const createElm = (oldParentVNode: d.VNode, newParentVNode: d.VNode, childIndex:
   }
 
   if (BUILD.slotRelocation) {
-    elm['s-hn'] = hostTagName;
+    elm[HOST_ELEMENT_TAG_NAME] = hostTagName;
 
     if (newVNode.$flags$ & (VNODE_FLAGS.isSlotFallback | VNODE_FLAGS.isSlotReference)) {
       // remember the content reference comment
@@ -167,7 +168,7 @@ const putBackInOriginalLocation = (parentElm: Node, recursive: boolean) => {
   const oldSlotChildNodes = parentElm.childNodes;
   for (let i = oldSlotChildNodes.length - 1; i >= 0; i--) {
     const childNode = oldSlotChildNodes[i] as any;
-    if (childNode['s-hn'] !== hostTagName && childNode['s-ol']) {
+    if (childNode[HOST_ELEMENT_TAG_NAME] !== hostTagName && childNode[ORIGINAL_LOCATION_REFERENCE]) {
       // // this child node in the old element is from another component
       // // remove this node from the old slot's parent
       // childNode.remove();
@@ -178,8 +179,8 @@ const putBackInOriginalLocation = (parentElm: Node, recursive: boolean) => {
       // remove the old original location comment entirely
       // later on the patch function will know what to do
       // and move this to the correct spot in need be
-      childNode['s-ol'].remove();
-      childNode['s-ol'] = undefined;
+      childNode[ORIGINAL_LOCATION_REFERENCE].remove();
+      childNode[ORIGINAL_LOCATION_REFERENCE] = undefined;
 
       checkSlotRelocate = true;
     }
@@ -256,9 +257,9 @@ const removeVnodes = (vnodes: d.VNode[], startIdx: number, endIdx: number) => {
           // so it's possible we need to show slot fallback content now
           checkSlotFallbackVisibility = true;
 
-          if (elm['s-ol']) {
+          if (elm[ORIGINAL_LOCATION_REFERENCE]) {
             // remove the original location comment
-            elm['s-ol'].remove();
+            elm[ORIGINAL_LOCATION_REFERENCE].remove();
           } else {
             // it's possible that child nodes of the node
             // that's being removed are slot nodes
@@ -560,10 +561,11 @@ const referenceNode = (node: d.RenderNode) => {
   // because of some other component's slot
   // but we still have an html comment in place of where
   // it's original location was according to it's original vdom
-  return (node && node['s-ol']) || node;
+  return (node && node[ORIGINAL_LOCATION_REFERENCE]) || node;
 };
 
-const parentReferenceNode = (node: d.RenderNode) => (node['s-ol'] ? node['s-ol'] : node).parentNode;
+const parentReferenceNode = (node: d.RenderNode) =>
+  (node[ORIGINAL_LOCATION_REFERENCE] ? node[ORIGINAL_LOCATION_REFERENCE] : node).parentNode;
 
 /**
  * Handle reconciling an outdated VNode with a new one which corresponds to
@@ -656,7 +658,7 @@ const updateFallbackSlotVisibility = (elm: d.RenderNode) => {
         for (j = 0; j < ilen; j++) {
           nodeType = childNodes[j].nodeType;
 
-          if (childNodes[j]['s-hn'] !== childNode['s-hn'] || slotNameAttr !== '') {
+          if (childNodes[j][HOST_ELEMENT_TAG_NAME] !== childNode[HOST_ELEMENT_TAG_NAME] || slotNameAttr !== '') {
             // this sibling node is from a different component OR is a named fallback slot node
             if (nodeType === NODE_TYPE.ElementNode && slotNameAttr === childNodes[j].getAttribute('slot')) {
               childNode.hidden = true;
@@ -709,7 +711,7 @@ const relocateSlotContent = (elm: d.RenderNode) => {
       for (j = hostContentNodes.length - 1; j >= 0; j--) {
         node = hostContentNodes[j] as d.RenderNode;
 
-        if (!node['s-cn'] && !node['s-nr'] && node['s-hn'] !== childNode['s-hn']) {
+        if (!node['s-cn'] && !node['s-nr'] && node[HOST_ELEMENT_TAG_NAME] !== childNode[HOST_ELEMENT_TAG_NAME]) {
           // let's do some relocating to its new home
           // but never relocate a content reference node
           // that is suppose to always represent the original content location
@@ -908,7 +910,7 @@ render() {
         relocateData = relocateNodes[i];
         nodeToRelocate = relocateData.$nodeToRelocate$;
 
-        if (!nodeToRelocate['s-ol']) {
+        if (!nodeToRelocate[ORIGINAL_LOCATION_REFERENCE]) {
           // add a reference node marking this node's original location
           // keep a reference to this node for later lookups
           orgLocationNode =
@@ -917,7 +919,10 @@ render() {
               : (doc.createTextNode('') as any);
           orgLocationNode['s-nr'] = nodeToRelocate;
 
-          nodeToRelocate.parentNode.insertBefore((nodeToRelocate['s-ol'] = orgLocationNode), nodeToRelocate);
+          nodeToRelocate.parentNode.insertBefore(
+            (nodeToRelocate[ORIGINAL_LOCATION_REFERENCE] = orgLocationNode),
+            nodeToRelocate,
+          );
         }
       }
 
@@ -930,7 +935,7 @@ render() {
           // after the slot reference node
           parentNodeRef = relocateData.$slotRefNode$.parentNode;
           insertBeforeNode = relocateData.$slotRefNode$.nextSibling;
-          orgLocationNode = nodeToRelocate['s-ol'] as any;
+          orgLocationNode = nodeToRelocate[ORIGINAL_LOCATION_REFERENCE] as any;
 
           while ((orgLocationNode = orgLocationNode.previousSibling as any)) {
             refNode = orgLocationNode['s-nr'];
@@ -952,9 +957,9 @@ render() {
             // has a different next sibling or parent relocated
 
             if (nodeToRelocate !== insertBeforeNode) {
-              if (!nodeToRelocate['s-hn'] && nodeToRelocate['s-ol']) {
+              if (!nodeToRelocate[HOST_ELEMENT_TAG_NAME] && nodeToRelocate[ORIGINAL_LOCATION_REFERENCE]) {
                 // probably a component in the index.html that doesn't have its hostname set
-                nodeToRelocate['s-hn'] = nodeToRelocate['s-ol'].parentNode.nodeName;
+                nodeToRelocate[HOST_ELEMENT_TAG_NAME] = nodeToRelocate[ORIGINAL_LOCATION_REFERENCE].parentNode.nodeName;
               }
               // add it back to the dom but in its new home
               parentNodeRef.insertBefore(nodeToRelocate, insertBeforeNode);
@@ -993,6 +998,6 @@ const originalLocationDebugNode = (nodeToRelocate: d.RenderNode): any =>
   doc.createComment(
     `org-location for ` +
       (nodeToRelocate.localName
-        ? `<${nodeToRelocate.localName}> (host=${nodeToRelocate['s-hn']})`
+        ? `<${nodeToRelocate.localName}> (host=${nodeToRelocate[HOST_ELEMENT_TAG_NAME]})`
         : `[${nodeToRelocate.textContent}]`),
   );

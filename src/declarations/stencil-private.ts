@@ -27,6 +27,18 @@ import type {
   TaskCommand,
 } from './stencil-public-compiler';
 import type { ComponentInterface, ListenTargetOptions, VNode } from './stencil-public-runtime';
+import {
+  CONTENT_REFERENCE_NODE,
+  ENCAPSULATION_TYPE,
+  HOST_ELEMENT_TAG_NAME,
+  HOST_ID,
+  IS_SLOT_REFERENCE,
+  NODE_ID,
+  NODE_REFERENCE,
+  ORIGINAL_LOCATION_REFERENCE,
+  SCOPE_ID,
+  SLOT_NAME,
+} from '../runtime/vdom/constants';
 
 export interface SourceMap {
   file: string;
@@ -1315,26 +1327,26 @@ export interface RenderNode extends HostElement {
    * Is Content Reference Node:
    * This node is a content reference node.
    */
-  ['s-cn']?: boolean;
+  [CONTENT_REFERENCE_NODE]?: boolean;
 
   /**
    * Is a slot reference node:
    * This is a node that represents where a slot
    * was originally located.
    */
-  ['s-sr']?: boolean;
+  [IS_SLOT_REFERENCE]?: boolean;
 
   /**
    * Slot name
    */
-  ['s-sn']?: string;
+  [SLOT_NAME]?: string;
 
   /**
    * Host element tag name:
    * The tag name of the host element that this
    * node was created in.
    */
-  ['s-hn']?: string;
+  [HOST_ELEMENT_TAG_NAME]?: string;
 
   /**
    * Original Location Reference:
@@ -1342,35 +1354,35 @@ export interface RenderNode extends HostElement {
    * which represents the original location
    * before it was moved to its slot.
    */
-  ['s-ol']?: RenderNode;
+  [ORIGINAL_LOCATION_REFERENCE]?: RenderNode;
 
   /**
    * Node reference:
    * This is a reference for a original location node
    * back to the node that's been moved around.
    */
-  ['s-nr']?: RenderNode;
+  [NODE_REFERENCE]?: RenderNode;
 
   /**
    * Scope Id
    */
-  ['s-si']?: string;
+  [SCOPE_ID]?: string;
 
   /**
    * Host Id (hydrate only)
    */
-  ['s-host-id']?: number;
+  [HOST_ID]?: number;
 
   /**
    * Node Id (hydrate only)
    */
-  ['s-node-id']?: number;
+  [NODE_ID]?: number;
 
   /**
    * Used to know the components encapsulation.
    * empty "" for shadow, "c" from scoped
    */
-  ['s-en']?: '' | /*shadow*/ 'c' /*scoped*/;
+  [ENCAPSULATION_TYPE]?: '' | /*shadow*/ 'c' /*scoped*/;
 }
 
 export type LazyBundlesRuntimeData = LazyBundleRuntimeData[];
