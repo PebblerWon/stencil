@@ -1313,11 +1313,8 @@ export interface PrerenderManager {
   maxConcurrency: number;
 }
 
-/**
- * Generic node that represents all of the
- * different types of nodes we'd see when rendering
- */
-export interface RenderNode extends HostElement {
+
+export interface RenderNodeProps {
   /**
    * Shadow root's host
    */
@@ -1383,7 +1380,19 @@ export interface RenderNode extends HostElement {
    * empty "" for shadow, "c" from scoped
    */
   [ENCAPSULATION_TYPE]?: '' | /*shadow*/ 'c' /*scoped*/;
+
+  childNodes: NodeListOf<RenderNode>;
+  parentNode: RenderNode;
 }
+
+/**
+ * Generic node that represents all of the
+ * different types of nodes we'd see when rendering
+ */
+export type RenderNode =
+  | HostElement & RenderNodeProps
+  | HostElement & Comment & RenderNodeProps
+  | HostElement & Text & RenderNodeProps;
 
 export type LazyBundlesRuntimeData = LazyBundleRuntimeData[];
 

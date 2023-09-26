@@ -4,11 +4,6 @@
  */
 export const CONTENT_REFERENCE_NODE = 's-cn';
 
-/**
- * Is a slot reference node:
- * This is a node that represents where a slot
- * was originally located.
- */
 export const IS_SLOT_REFERENCE = 's-sr';
 
 /**

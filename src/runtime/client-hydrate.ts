@@ -28,13 +28,13 @@ export const initializeClientHydrate = (
   const vnode: d.VNode = (hostRef.$vnode$ = newVNode(tagName, null));
 
   if (!plt.$orgLocNodes$) {
-    initializeDocumentHydrate(doc.body, (plt.$orgLocNodes$ = new Map()));
+    initializeDocumentHydrate(doc.body as d.RenderNode, (plt.$orgLocNodes$ = new Map()));
   }
 
   hostElm[HYDRATE_ID] = hostId;
   hostElm.removeAttribute(HYDRATE_ID);
 
-  clientHydrate(vnode, childRenderNodes, slotNodes, shadowRootNodes, hostElm, hostElm, hostId);
+  clientHydrate(vnode, childRenderNodes, slotNodes, shadowRootNodes, hostElm, hostElm as d.RenderNode, hostId);
 
   childRenderNodes.map((c) => {
     const orgLocationId = c.$hostId$ + '.' + c.$nodeId$;

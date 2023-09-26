@@ -20,7 +20,7 @@ export const insertVdomAnnotations = (doc: Document, staticComponents: string[])
     };
     const orgLocationNodes: d.RenderNode[] = [];
 
-    parseVNodeAnnotations(doc, doc.body, docData, orgLocationNodes);
+    parseVNodeAnnotations(doc, doc.body as d.RenderNode, docData, orgLocationNodes);
 
     orgLocationNodes.forEach((orgLocationNode) => {
       if (orgLocationNode != null) {
