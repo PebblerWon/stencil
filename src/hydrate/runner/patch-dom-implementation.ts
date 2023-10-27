@@ -40,6 +40,7 @@ export function patchDomImplementation(doc: any, opts: d.HydrateFactoryOptions) 
   try {
     // Assigning the baseURI prevents JavaScript optimizers from treating this as dead code.
     // This assignment was added to handle an issue with Angular 16 + SSR - https://github.com/ionic-team/ionic-framework/issues/28077
+    // @ts-ignore
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const __stencil_baseURI = doc.baseURI;
   } catch (e) {
