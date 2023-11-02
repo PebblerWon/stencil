@@ -15,7 +15,7 @@ import { resolveComponentDependencies } from '../entries/resolve-component-depen
 import { convertDecoratorsToStatic } from '../transformers/decorators-to-static/convert-decorators';
 import { rewriteAliasedDTSImportPaths } from '../transformers/rewrite-aliased-paths';
 import { updateModule } from '../transformers/static-to-meta/parse-static';
-// import { generateAppTypes } from '../types/generate-app-types';
+import { generateAppTypes } from '../types/generate-app-types';
 import { updateStencilTypesImports } from '../types/stencil-types';
 import { validateTranspiledComponents } from './validate-components';
 
@@ -107,11 +107,7 @@ export const runTsProgram = async (
     return false;
   }
 
-  // create the components.d.ts file and write to disk
-  // const hasTypesChanged = await generateAppTypes(config, compilerCtx, buildCtx, 'src');
-  // if (hasTypesChanged) {
-  //   return true;
-  // }
+  const hasTypesChanged = await generateAppTypes(config, compilerCtx, buildCtx, 'src');
 
   if (typesOutputTarget.length > 0) {
     // copy src dts files that do not get emitted by the compiler
@@ -149,7 +145,7 @@ export const runTsProgram = async (
     buildCtx.diagnostics.push(...tsSemantic);
   }
 
-  return false;
+  return hasTypesChanged;
 };
 
 /**
