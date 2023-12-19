@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        jest: ['24', '25', '26', '27', '28', '29']
+        jest: ['24', '25', '26', '27', '28', '29', '30.0.0-alpha.2']
         node: ['16', '18', '20']
         os: ['ubuntu-latest', 'windows-latest']
     runs-on: ${{ matrix.os }}
