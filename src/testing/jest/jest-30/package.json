@@ -1,7 +1,7 @@
 {
-  "name": "@stencil/jest-29",
+  "name": "@stencil/jest-30",
   "version": "1.0.0",
-  "description": "Internal package for supporting Jest 29 with Stencil",
+  "description": "Internal package for supporting Jest 30 with Stencil",
   "license": "MIT",
   "author": "Ionic Team",
   "homepage": "https://stenciljs.com/",
@@ -10,6 +10,6 @@
   },
   "devDependencies": {
     "@types/jest": "^29.5.6",
-    "jest": "^29.7.0"
+    "jest": "^30.0.0-alpha.2"
   }
 }

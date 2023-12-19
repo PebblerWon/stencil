@@ -1,0 +1,1 @@
+1. Update `@types/jest` to v30. No such types exist yet.
