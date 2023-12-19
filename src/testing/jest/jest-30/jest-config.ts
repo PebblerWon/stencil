@@ -2,7 +2,7 @@ import type { Config } from '@jest/types';
 import type * as d from '@stencil/core/internal';
 import { isString } from '@utils';
 
-import { Jest29Stencil } from './jest-facade';
+import { Jest30Stencil } from './jest-facade';
 
 /**
  * Builds the `argv` to be used when programmatically invoking the Jest CLI
@@ -111,7 +111,7 @@ export function buildJestConfig(config: d.ValidatedConfig): string {
     jestConfig.verbose = stencilConfigTesting.verbose;
   }
 
-  jestConfig.testRunner = new Jest29Stencil().getDefaultJestRunner();
+  jestConfig.testRunner = new Jest30Stencil().getDefaultJestRunner();
 
   return JSON.stringify(jestConfig);
 }
