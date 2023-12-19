@@ -10,3 +10,9 @@
 - Stencil compiles + type checks
 - Stencil projects build
 - Tests run (smoke test in component starter)
+- Ionic Framework Unit Tests pass
+
+# Additional TODOs
+
+1. Review Alpha 1 Breaking Changes, Evaluate that Against this Branch
+2. Review Alpha 2 Breaking Changes, Evaluate that Against this Branch (you see where this is going)
