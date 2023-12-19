@@ -12,7 +12,7 @@ import semverMajor from 'semver/functions/major';
 import { Jest27Stencil } from './jest-27-and-under/jest-facade';
 import { Jest28Stencil } from './jest-28/jest-facade';
 import { Jest29Stencil } from './jest-29/jest-facade';
-import { Jest30Stencil } from "./jest-30/jest-facade";
+import { Jest30Stencil } from './jest-30/jest-facade';
 import { getJestMajorVersion, JestCliRunner, JestPresetConfig, JestScreenshotRunner } from './jest-apis';
 import { JestFacade } from './jest-facade';
 
