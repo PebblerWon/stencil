@@ -15,14 +15,14 @@ export const taskTest = async (config: ValidatedConfig): Promise<void> => {
   };
 
   // always ensure we have jest modules installed
-  const ensureModuleIds = ['@types/jest', 'jest', 'jest-cli'];
+  // const ensureModuleIds = ['@types/jest', 'jest', 'jest-cli'];
 
   if (testingRunOpts.e2e) {
     // if it's an e2e test, also make sure we're got
     // puppeteer modules installed and if browserExecutablePath is provided don't download Chromium use only puppeteer-core instead
-    const puppeteer = config.testing.browserExecutablePath ? 'puppeteer-core' : 'puppeteer';
+    // const puppeteer = config.testing.browserExecutablePath ? 'puppeteer-core' : 'puppeteer';
 
-    ensureModuleIds.push(puppeteer);
+    // ensureModuleIds.push(puppeteer);
 
     if (testingRunOpts.screenshot) {
       // ensure we've got pixelmatch for screenshots
@@ -35,11 +35,11 @@ export const taskTest = async (config: ValidatedConfig): Promise<void> => {
   }
 
   // ensure we've got the required modules installed
-  const diagnostics = await config.sys.lazyRequire.ensure(config.rootDir, ensureModuleIds);
-  if (diagnostics.length > 0) {
-    config.logger.printDiagnostics(diagnostics);
-    return config.sys.exit(1);
-  }
+  // const diagnostics = await config.sys.lazyRequire.ensure(config.rootDir, ensureModuleIds);
+  // if (diagnostics.length > 0) {
+  //   config.logger.printDiagnostics(diagnostics);
+  //   return config.sys.exit(1);
+  // }
 
   try {
     /**
