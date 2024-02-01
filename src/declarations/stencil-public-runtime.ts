@@ -118,7 +118,7 @@ export interface MethodDecorator {
 export interface MethodOptions {}
 
 export interface ElementDecorator {
-  (): PropertyDecorator;
+  (): (_a: unknown, _b: unknown, _c?: unknown) => any | void;
 }
 
 export interface EventDecorator {
@@ -210,7 +210,7 @@ export declare const Env: { [prop: string]: string | undefined };
  * The `@Component()` decorator is used to provide metadata about the component class.
  * https://stenciljs.com/docs/component
  */
-export declare const Component: ComponentDecorator | EsComponentDecorator;
+export declare const Component: ComponentDecorator;// | EsComponentDecorator;
 
 /**
  * The `@Element()` decorator is a reference to the actual host element
