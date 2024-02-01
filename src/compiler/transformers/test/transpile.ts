@@ -38,7 +38,7 @@ export function transpileModule(
     composite: undefined,
     declaration: undefined,
     declarationDir: undefined,
-    experimentalDecorators: true,
+    // experimentalDecorators: false,
     isolatedModules: true,
     jsx: ts.JsxEmit.React,
     jsxFactory: 'h',

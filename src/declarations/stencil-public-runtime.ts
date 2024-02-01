@@ -7,6 +7,10 @@ declare type CustomMethodDecorator<T> = (
 export interface ComponentDecorator {
   (opts?: ComponentOptions): ClassDecorator;
 }
+export interface EsComponentDecorator {
+  (opts?: ComponentOptions): <TFunction extends Function>(value: TFunction, context: ClassDecoratorContext) => TFunction | void;
+}
+
 export interface ComponentOptions {
   /**
    * When set to `true` this component will be form-associated. See
@@ -80,6 +84,11 @@ export interface ModeStyles {
 export interface PropDecorator {
   (opts?: PropOptions): PropertyDecorator;
 }
+
+export interface EsPropDecorator {
+  (opts?: PropOptions): (value: undefined, context: ClassFieldDecoratorContext) => unknown | void;
+}
+
 export interface PropOptions {
   /**
    * The name of the associated DOM attribute.
@@ -201,7 +210,7 @@ export declare const Env: { [prop: string]: string | undefined };
  * The `@Component()` decorator is used to provide metadata about the component class.
  * https://stenciljs.com/docs/component
  */
-export declare const Component: ComponentDecorator;
+export declare const Component: ComponentDecorator | EsComponentDecorator;
 
 /**
  * The `@Element()` decorator is a reference to the actual host element
@@ -249,7 +258,7 @@ export declare const Method: MethodDecorator;
  * Any value changes to a Prop will cause a re-render.
  * https://stenciljs.com/docs/properties
  */
-export declare const Prop: PropDecorator;
+export declare const Prop: PropDecorator | EsPropDecorator;
 
 /**
  * The `@State()` decorator can be used to manage internal data for a component.

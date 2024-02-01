@@ -22,7 +22,7 @@ import type * as d from '../../declarations';
  */
 export const getTsOptionsToExtend = (config: d.ValidatedConfig): ts.CompilerOptions => {
   const tsOptions: ts.CompilerOptions = {
-    experimentalDecorators: true,
+    // experimentalDecorators: false,
     // if the `DIST_TYPES` output target is present then we'd like to emit
     // declaration files
     declaration: config.outputTargets.some(isOutputTargetDistTypes),

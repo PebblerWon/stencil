@@ -165,7 +165,7 @@ const createDefaultTsConfig = (config: d.ValidatedConfig) =>
     {
       compilerOptions: {
         allowSyntheticDefaultImports: true,
-        experimentalDecorators: true,
+        // experimentalDecorators: false,
         lib: ['dom', 'es2015'],
         moduleResolution: 'node',
         module: 'esnext',
