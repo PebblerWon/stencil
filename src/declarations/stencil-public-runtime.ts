@@ -258,7 +258,7 @@ export declare const Method: MethodDecorator;
  * Any value changes to a Prop will cause a re-render.
  * https://stenciljs.com/docs/properties
  */
-export declare const Prop: PropDecorator | EsPropDecorator;
+export declare const Prop: PropDecorator | any;
 
 /**
  * The `@State()` decorator can be used to manage internal data for a component.
