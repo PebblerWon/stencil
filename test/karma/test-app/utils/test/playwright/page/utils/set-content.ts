@@ -1,4 +1,4 @@
-import type { Page } from '@playwright/test';
+import type { Page, TestInfo } from '@playwright/test';
 import type { E2EPageOptions } from '@utils/test/playwright';
 
 /**
@@ -9,14 +9,15 @@ import type { E2EPageOptions } from '@utils/test/playwright';
  *
  * @param page The Playwright page object.
  * @param html The HTML content to set on the page.
+ * @param testInfo Test information from the test bed. Used to access base URL.
  * @param options The test config associated with the current test run.
  */
-export const setContent = async (page: Page, html: string, options?: E2EPageOptions) => {
+export const setContent = async (page: Page, html: string, testInfo: TestInfo, options?: E2EPageOptions) => {
   if (page.isClosed()) {
     throw new Error('setContent unavailable: page is already closed');
   }
 
-  const baseUrl = process.env.PLAYWRIGHT_TEST_BASE_URL;
+  const baseUrl = testInfo.project.use.baseURL;
 
   const output = `
     <!DOCTYPE html>

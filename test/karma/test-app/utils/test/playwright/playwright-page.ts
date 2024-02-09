@@ -40,7 +40,7 @@ export async function extendPageFixture(page: E2EPage) {
 
   // Overridden Playwright methods
   page.goto = (url: string, options?: E2EPageOptions) => goToPage(page, url, originalGoto, options);
-  page.setContent = (html: string, options?: E2EPageOptions) => setContent(page, html, options);
+  page.setContent = (html: string, options?: E2EPageOptions) => setContent(page, html, test.info(), options);
   page.locator = (selector: string, options?: LocatorOptions) => locator(page, originalLocator, selector, options);
 
   // Custom adapter methods
