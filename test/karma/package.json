@@ -23,6 +23,7 @@
     "karma.ie": "karma start karma.config.js --browsers=IE --single-run=false"
   },
   "devDependencies": {
+    "@playwright/test": "^1.41.2",
     "@stencil/sass": "^3.0.0",
     "@types/node": "^16.18.36",
     "bootstrap": "^5.0.0",

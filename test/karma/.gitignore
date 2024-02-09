@@ -1,2 +1,6 @@
 /test-output
 /tmp-compiled-tests
+
+# Playwright
+playwright-report/
+test-results/

@@ -9,10 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "jsx": "react",
     "jsxFactory": "h",
-    "lib": [
-      "dom",
-      "es2017"
-    ],
+    "lib": ["dom", "es2017"],
     "module": "commonjs",
     "moduleResolution": "node",
     "noImplicitAny": false,
@@ -28,8 +25,10 @@
       "@stencil/core": ["../../internal"],
       "@stencil/core/internal": ["../../internal"],
       "@stencil/core/internal/client": ["../../internal/client"],
-      "@stencil/core/testing": ["../../testing"]
-    }
+      "@stencil/core/testing": ["../../testing"],
+      "@utils/*": ["test-app/utils/*"],
+      "@utils/test": ["test-app/utils/test/utils"],
+    },
   },
   "include": [
     "test-app/components.d.ts",
@@ -37,10 +36,7 @@
     "test-app/**/*.tsx",
     "test-app/**/*.ts",
     "test-app/util.ts",
-    "test-app/global.ts"
+    "test-app/global.ts",
   ],
-  "exclude": [
-    "test-prerender",
-    "test-sibling"
-  ]
+  "exclude": ["test-prerender", "test-sibling"],
 }
