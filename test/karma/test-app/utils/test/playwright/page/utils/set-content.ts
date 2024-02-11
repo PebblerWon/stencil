@@ -18,6 +18,7 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
   }
 
   const baseUrl = testInfo.project.use.baseURL;
+  const baseEntryPath = process.env.STENCIL_ENTRY_PATH;
 
   const output = `
     <!DOCTYPE html>
@@ -26,8 +27,8 @@ export const setContent = async (page: Page, html: string, testInfo: TestInfo, o
         <title>Stencil Playwright Test</title>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0" />
-        <script src="./test-www/build/testapp.js" nomodule></script>
-        <script type="module" src="./test-www/build/testapp.esm.js"></script>
+        <script src="${baseEntryPath}.js" nomodule></script>
+        <script type="module" src="${baseEntryPath}.esm.js"></script>
       </head>
       <body>
         ${html}

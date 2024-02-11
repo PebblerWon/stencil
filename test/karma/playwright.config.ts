@@ -1,19 +1,9 @@
-import { expect, PlaywrightTestConfig } from '@playwright/test';
+import { expect } from '@playwright/test';
 
+import { createStencilPlaywrightConfig } from './test-app/utils/test/playwright/create-config';
 import { matchers } from './test-app/utils/test/playwright/matchers';
 
 expect.extend(matchers);
 
-const config: PlaywrightTestConfig = {
-  testMatch: '*.e2e.ts',
-  use: {
-    baseURL: 'http://localhost:3333',
-  },
-  webServer: {
-    command: 'npm start -- --no-open',
-    url: 'http://localhost:3333/ping',
-    reuseExistingServer: !process.env.CI,
-  },
-};
-
-export default config;
+// TODO: idk if it's valid to export an async result, Playwright seems to handle this so far
+export default createStencilPlaywrightConfig();
