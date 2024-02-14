@@ -2,7 +2,6 @@ import color from 'ansi-colors';
 import fs from 'fs-extra';
 import { join } from 'path';
 
-import { promptPrepareRelease } from './release-prepare-prompts';
 import { runReleaseTasks } from './release-tasks';
 import { BuildOptions, getOptions } from './utils/options';
 import { getNewVersion } from './utils/release-utils';
@@ -16,27 +15,6 @@ import { getLatestVermoji } from './utils/vermoji';
  */
 export async function release(rootDir: string, args: ReadonlyArray<string>): Promise<void> {
   const buildDir = join(rootDir, 'build');
-  const releaseDataPath = join(buildDir, 'release-data.json');
-
-  if (args.includes('--prepare')) {
-    await fs.emptyDir(buildDir);
-    const opts = getOptions(rootDir, {
-      isPublishRelease: false,
-      isProd: true,
-    });
-
-    const responses = await promptPrepareRelease(opts);
-    opts.version = responses.versionToUse;
-
-    if (!responses.confirm) {
-      console.log(`\n${color.bold.magenta('Publish preparation cancelled by user')}\n`);
-      return;
-    }
-
-    fs.writeJsonSync(releaseDataPath, opts, { spaces: 2 });
-    await prepareRelease(opts, args);
-    return;
-  }
 
   if (args.includes('--ci-prepare')) {
     await fs.emptyDir(buildDir);
