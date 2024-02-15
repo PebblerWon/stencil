@@ -85,6 +85,24 @@ export async function runReleaseTasks(opts: BuildOptions, args: ReadonlyArray<st
     skip: () => isDryRun,
   });
 
+  if (!opts.isPublishRelease) {
+    tasks.push(
+      {
+        title: `Set package.json version to ${color.bold.yellow(opts.version)}`,
+        task: async () => {
+          // use `--no-git-tag-version` to ensure that the tag for the release is not prematurely created
+          await execa('npm', ['version', '--no-git-tag-version', opts.version], { cwd: rootDir });
+        },
+      },
+      {
+        title: `Generate ${opts.version} Changelog ${opts.vermoji}`,
+        task: async () => {
+          await updateChangeLog(opts);
+        },
+      },
+    );
+  }
+
   if (opts.isPublishRelease) {
     // for actual releases, we'll need to build + bundle stencil in order to publish it to npm.
     // for pre-releases, this step will occur in GitHub after the PR has been created.
@@ -100,24 +118,6 @@ export async function runReleaseTasks(opts: BuildOptions, args: ReadonlyArray<st
       {
         title: `Bundle @stencil/core ${color.dim('(' + opts.buildId + ')')}`,
         task: () => bundleBuild(opts),
-      },
-    );
-  }
-
-  if (!opts.isPublishRelease) {
-    tasks.push(
-      {
-        title: `Set package.json version to ${color.bold.yellow(opts.version)}`,
-        task: async () => {
-          // use `--no-git-tag-version` to ensure that the tag for the release is not prematurely created
-          await execa('npm', ['version', '--no-git-tag-version', opts.version], { cwd: rootDir });
-        },
-      },
-      {
-        title: `Generate ${opts.version} Changelog ${opts.vermoji}`,
-        task: async () => {
-          await updateChangeLog(opts);
-        },
       },
     );
   }
