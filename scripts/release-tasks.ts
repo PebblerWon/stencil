@@ -104,8 +104,6 @@ export async function runReleaseTasks(opts: BuildOptions, args: ReadonlyArray<st
   }
 
   if (opts.isPublishRelease) {
-    // for actual releases, we'll need to build + bundle stencil in order to publish it to npm.
-    // for pre-releases, this step will occur in GitHub after the PR has been created.
     tasks.push(
       {
         title: `Install npm dependencies ${color.dim('(npm ci)')}`,
