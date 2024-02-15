@@ -119,11 +119,6 @@ export async function runReleaseTasks(opts: BuildOptions, args: ReadonlyArray<st
         title: `Bundle @stencil/core ${color.dim('(' + opts.buildId + ')')}`,
         task: () => bundleBuild(opts),
       },
-    );
-  }
-
-  if (opts.isPublishRelease) {
-    tasks.push(
       {
         title: 'Publish @stencil/core to npm',
         task: () => {
