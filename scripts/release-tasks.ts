@@ -85,29 +85,24 @@ export async function runReleaseTasks(opts: BuildOptions, args: ReadonlyArray<st
     skip: () => isDryRun,
   });
 
-  tasks.push(
-    {
-      title: `Install npm dependencies ${color.dim('(npm ci)')}`,
-      task: () => execa('npm', ['ci'], { cwd: rootDir }),
-      // for pre-releases, this step will occur in GitHub after the PR has been created.
-      // for actual releases, we'll need to build + bundle stencil in order to publish it to npm.
-      skip: () => !opts.isPublishRelease,
-    },
-    {
-      title: `Transpile Stencil ${color.dim('(tsc.prod)')}`,
-      task: () => execa('npm', ['run', 'tsc.prod'], { cwd: rootDir }),
-      // for pre-releases, this step will occur in GitHub after the PR has been created.
-      // for actual releases, we'll need to build + bundle stencil in order to publish it to npm.
-      skip: () => !opts.isPublishRelease,
-    },
-    {
-      title: `Bundle @stencil/core ${color.dim('(' + opts.buildId + ')')}`,
-      task: () => bundleBuild(opts),
-      // for pre-releases, this step will occur in GitHub after the PR has been created.
-      // for actual releases, we'll need to build + bundle stencil in order to publish it to npm.
-      skip: () => !opts.isPublishRelease,
-    },
-  );
+  if (opts.isPublishRelease) {
+    // for actual releases, we'll need to build + bundle stencil in order to publish it to npm.
+    // for pre-releases, this step will occur in GitHub after the PR has been created.
+    tasks.push(
+      {
+        title: `Install npm dependencies ${color.dim('(npm ci)')}`,
+        task: () => execa('npm', ['ci'], { cwd: rootDir }),
+      },
+      {
+        title: `Transpile Stencil ${color.dim('(tsc.prod)')}`,
+        task: () => execa('npm', ['run', 'tsc.prod'], { cwd: rootDir }),
+      },
+      {
+        title: `Bundle @stencil/core ${color.dim('(' + opts.buildId + ')')}`,
+        task: () => bundleBuild(opts),
+      },
+    );
+  }
 
   if (!opts.isPublishRelease) {
     tasks.push(
