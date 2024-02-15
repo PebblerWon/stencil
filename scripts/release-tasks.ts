@@ -3,12 +3,7 @@ import Listr, { ListrTask } from 'listr';
 
 import { bundleBuild } from './build';
 import { BuildOptions } from './utils/options';
-import {
-  isPrereleaseVersion,
-  isValidVersionInput,
-  SEMVER_INCREMENTS,
-  updateChangeLog,
-} from './utils/release-utils';
+import { isPrereleaseVersion, isValidVersionInput, SEMVER_INCREMENTS, updateChangeLog } from './utils/release-utils';
 
 /**
  * Runs a litany of tasks used to ensure a safe release of a new version of Stencil
@@ -58,41 +53,39 @@ export async function runReleaseTasks(opts: BuildOptions, args: ReadonlyArray<st
     });
   }
 
-  tasks.push(
-    {
-      /**
-       * When we both pre-release and release, it's beneficial to ensure that the tag does not already exist in git.
-       * Doing so ought to catch out of the ordinary circumstances that ought to be investigated.
-       */
-      title: 'Check git tag existence',
-      task: () =>
-        execa('git', ['fetch'])
-          // Retrieve the prefix for a version string - https://docs.npmjs.com/cli/v7/using-npm/config#tag-version-prefix
-          .then(() => execa('npm', ['config', 'get', 'tag-version-prefix']))
-          .then(
-            ({ stdout }) => (tagPrefix = stdout),
-            () => {},
-          )
-          // verify that a tag for the new version string does not already exist by checking the output of
-          // `git rev-parse --verify`
-          .then(() => execa('git', ['rev-parse', '--quiet', '--verify', `refs/tags/${tagPrefix}${newVersion}`]))
-          .then(
-            ({ stdout }) => {
-              if (stdout) {
-                throw new Error(`Git tag \`${tagPrefix}${newVersion}\` already exists.`);
-              }
-            },
-            (err) => {
-              // Command fails with code 1 and no output if the tag does not exist, even though `--quiet` is provided
-              // https://github.com/sindresorhus/np/pull/73#discussion_r72385685
-              if (err.stdout !== '' || err.stderr !== '') {
-                throw err;
-              }
-            },
-          ),
-      skip: () => isDryRun,
-    },
-  );
+  tasks.push({
+    /**
+     * When we both pre-release and release, it's beneficial to ensure that the tag does not already exist in git.
+     * Doing so ought to catch out of the ordinary circumstances that ought to be investigated.
+     */
+    title: 'Check git tag existence',
+    task: () =>
+      execa('git', ['fetch'])
+        // Retrieve the prefix for a version string - https://docs.npmjs.com/cli/v7/using-npm/config#tag-version-prefix
+        .then(() => execa('npm', ['config', 'get', 'tag-version-prefix']))
+        .then(
+          ({ stdout }) => (tagPrefix = stdout),
+          () => {},
+        )
+        // verify that a tag for the new version string does not already exist by checking the output of
+        // `git rev-parse --verify`
+        .then(() => execa('git', ['rev-parse', '--quiet', '--verify', `refs/tags/${tagPrefix}${newVersion}`]))
+        .then(
+          ({ stdout }) => {
+            if (stdout) {
+              throw new Error(`Git tag \`${tagPrefix}${newVersion}\` already exists.`);
+            }
+          },
+          (err) => {
+            // Command fails with code 1 and no output if the tag does not exist, even though `--quiet` is provided
+            // https://github.com/sindresorhus/np/pull/73#discussion_r72385685
+            if (err.stdout !== '' || err.stderr !== '') {
+              throw err;
+            }
+          },
+        ),
+    skip: () => isDryRun,
+  });
 
   tasks.push(
     {
@@ -142,9 +135,7 @@ export async function runReleaseTasks(opts: BuildOptions, args: ReadonlyArray<st
         title: 'Publish @stencil/core to npm',
         task: () => {
           const cmd = 'npm';
-          const cmdArgs = ['publish']
-            .concat(opts.tag ? ['--tag', opts.tag] : [])
-            .concat(['--provenance']);
+          const cmdArgs = ['publish'].concat(opts.tag ? ['--tag', opts.tag] : []).concat(['--provenance']);
 
           if (isDryRun) {
             return console.log(`[dry-run] ${cmd} ${cmdArgs.join(' ')}`);
