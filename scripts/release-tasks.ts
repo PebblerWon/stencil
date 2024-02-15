@@ -21,7 +21,6 @@ export async function runReleaseTasks(opts: BuildOptions, args: ReadonlyArray<st
   const tasks: ListrTask[] = [];
   const newVersion = opts.version;
   const isDryRun = args.includes('--dry-run') || opts.version.includes('dryrun');
-  const isAnyBranch = args.includes('--any-branch');
   let tagPrefix: string;
 
   const { execa } = await import('execa');
