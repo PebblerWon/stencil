@@ -26,8 +26,8 @@ export async function runReleaseTasks(opts: BuildOptions, args: ReadonlyArray<st
 
   if (!opts.isPublishRelease) {
     /**
-     * For automated and manual releases, always verify that the version provided to the release scripts is a valid
-     * semver 'word' (e.g. 'major', 'minor', etc.) or version (e.g. 1.0.0)
+     * For release preparation, verify that the version provided to the release scripts is a valid semver 'word'
+     * (e.g. 'major', 'minor', etc.) or version (e.g. 1.0.0)
      */
     tasks.push({
       title: 'Validate version',
@@ -38,9 +38,7 @@ export async function runReleaseTasks(opts: BuildOptions, args: ReadonlyArray<st
       },
       skip: () => isDryRun,
     });
-  }
-
-  if (opts.isPublishRelease) {
+  } else {
     tasks.push({
       title: 'Check for pre-release version',
       task: () => {
