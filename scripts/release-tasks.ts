@@ -101,9 +101,7 @@ export async function runReleaseTasks(opts: BuildOptions, args: ReadonlyArray<st
         },
       },
     );
-  }
-
-  if (opts.isPublishRelease) {
+  } else {
     tasks.push(
       {
         title: `Install npm dependencies ${color.dim('(npm ci)')}`,
