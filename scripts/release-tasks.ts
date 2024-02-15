@@ -2,12 +2,10 @@ import color from 'ansi-colors';
 import Listr, { ListrTask } from 'listr';
 
 import { bundleBuild } from './build';
-import { validateBuild } from './test/validate-build';
 import { BuildOptions } from './utils/options';
 import {
   isPrereleaseVersion,
   isValidVersionInput,
-  postGithubRelease,
   SEMVER_INCREMENTS,
   updateChangeLog,
 } from './utils/release-utils';
