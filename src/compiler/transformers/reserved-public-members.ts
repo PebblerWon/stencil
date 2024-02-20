@@ -137,6 +137,10 @@ const HTML_ELEMENT_KEYS = [
   'click',
   'focus',
   'blur',
+  'ontouchstart',
+  'ontouchmove',
+  'ontouchend',
+  'ontouchcancel',
 ];
 
 const ELEMENT_KEYS = [
