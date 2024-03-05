@@ -257,7 +257,7 @@ const callRender = (hostRef: d.HostRef, instance: any, elm: HTMLElement, isIniti
      * minification optimization: `allRenderFn` is `true` if all components have a `render`
      * method, so we can call the method immediately. If not, check before calling it.
      */
-    instance = allRenderFn ? instance?.render() : instance.render && instance.render();
+    instance = allRenderFn ? instance?.render() : instance?.render && instance?.render();
 
     if (updatable && taskQueue) {
       hostRef.$flags$ &= ~HOST_FLAGS.isQueuedForUpdate;

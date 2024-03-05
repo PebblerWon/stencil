@@ -12,6 +12,10 @@ export const getHostRef = (elm: d.RuntimeRef | undefined): d.HostRef | undefined
   return hostRefs.get(elm);
 };
 
+export const clearHostRef = (elm: d.RuntimeRef) => {
+  hostRefs.delete(elm);
+}
+
 /**
  * Add the provided `hostRef` instance to the global {@link hostRefs} map, using the provided `lazyInstance` as a key.
  * @param lazyInstance a Stencil component instance

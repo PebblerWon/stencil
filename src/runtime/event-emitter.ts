@@ -6,13 +6,20 @@ import type * as d from '../declarations';
 import { getElement } from './element';
 
 export const createEvent = (ref: d.RuntimeRef, name: string, flags: number) => {
-  const elm = getElement(ref) as HTMLElement;
+  // we can't have these event creators holding a strong reference to an
+  // element in closure
+  const elmRef = new WeakRef(getElement(ref) as HTMLElement);
   return {
     emit: (detail: any) => {
-      if (BUILD.isDev && !elm.isConnected) {
+      const deref = elmRef.deref();
+      if (!deref) {
+        // GC got here first
+        return undefined;
+      }
+      if (BUILD.isDev && !deref.isConnected) {
         consoleDevWarn(`The "${name}" event was emitted, but the dispatcher node is no longer connected to the dom.`);
       }
-      return emitEvent(elm, name, {
+      return emitEvent(deref, name, {
         bubbles: !!(flags & EVENT_FLAGS.Bubbles),
         composed: !!(flags & EVENT_FLAGS.Composed),
         cancelable: !!(flags & EVENT_FLAGS.Cancellable),

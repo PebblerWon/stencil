@@ -81,6 +81,8 @@ const inspect = (ref: any) => {
 };
 
 export const installDevTools = () => {
+  return;
+  // @ts-ignore
   if (BUILD.devTools) {
     const stencil = ((win as any).stencil = (win as any).stencil || {});
     const originalInspect = stencil.inspect;
