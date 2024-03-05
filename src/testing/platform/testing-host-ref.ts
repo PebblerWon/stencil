@@ -36,7 +36,7 @@ export const registerInstance = (
     hostRef = getHostRef(elm);
   }
 
-  hostRef.$lazyInstance$ = lazyInstance;
+  hostRef.$lazyInstance$ = new WeakRef(lazyInstance);
   return hostRefs.set(lazyInstance, hostRef);
 };
 

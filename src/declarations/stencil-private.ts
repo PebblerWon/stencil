@@ -1559,12 +1559,12 @@ export interface HostRef {
    * for the first time. This is primarily used to wait for the first `update` to be
    * called on a component.
    */
-  $onInstancePromise$?: Promise<HostElement>;
+  $onInstancePromise$?: Promise<WeakRef<HostElement>>;
   /**
    * A callback which resolves {@link HostRef.$onInstancePromise$}
    * @param elm host element
    */
-  $onInstanceResolve$?: (elm: HostElement) => void;
+  $onInstanceResolve$?: (elm: WeakRef<HostElement>) => void;
   /**
    * A promise which resolves when the component has finished rendering for the first time.
    * It is called after {@link HostRef.$onInstancePromise$} resolves.

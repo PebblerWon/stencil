@@ -25,6 +25,16 @@ export const disconnectedCallback = async (elm: d.HostElement) => {
       }
     }
 
+    if (BUILD.state) {
+      if (hostRef.$instanceValues$) {
+        hostRef.$instanceValues$ = null;
+      }
+    }
+
+    delete hostRef.$vnode$.$attrs$;
+    delete hostRef.$vnode$.$children$;
+    delete hostRef.$vnode$;
+
     if (!BUILD.lazyLoad) {
       disconnectInstance(elm);
     } else if (hostRef?.$lazyInstance$) {

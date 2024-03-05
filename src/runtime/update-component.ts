@@ -364,7 +364,7 @@ export const postUpdateComponent = (hostRef: d.HostRef) => {
   }
 
   if (BUILD.method && BUILD.lazyLoad) {
-    hostRef.$onInstanceResolve$(elm);
+    hostRef.$onInstanceResolve$(new WeakRef(elm));
   }
   // load events fire from bottom to top
   // the deepest elements load first then bubbles up
