@@ -1109,7 +1109,7 @@ export interface HostElement extends HTMLElement {
 
   ['s-p']?: Promise<void>[];
 
-  componentOnReady?: () => Promise<this>;
+  componentOnReady?: () => Promise<WeakRef<this>>;
 }
 
 export interface HydrateResults {
@@ -1548,12 +1548,12 @@ export interface HostRef {
    * A promise that gets resolved if `BUILD.asyncLoading` is enabled and after the `componentDidLoad`
    * and before the `componentDidUpdate` lifecycle events are triggered.
    */
-  $onReadyPromise$?: Promise<HostElement>;
+  $onReadyPromise$?: Promise<WeakRef<HostElement>>;
   /**
    * A callback which resolves {@link HostRef.$onReadyPromise$}
    * @param elm host element
    */
-  $onReadyResolve$?: (elm: HostElement) => void;
+  $onReadyResolve$?: (elm: WeakRef<HostElement>) => void;
   /**
    * A promise which resolves with the host component once it has finished rendering
    * for the first time. This is primarily used to wait for the first `update` to be

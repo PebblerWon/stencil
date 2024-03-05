@@ -656,6 +656,7 @@ export const patch = (oldVNode: d.VNode, newVNode: d.VNode, isInitialRender = fa
   const oldChildren = oldVNode.$children$;
   const newChildren = newVNode.$children$;
   const tag = newVNode.$tag$;
+  console.log('patching with tag', tag);
   const text = newVNode.$text$;
   let defaultHolder: Comment;
 
