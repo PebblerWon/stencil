@@ -340,7 +340,7 @@ export const postUpdateComponent = (hostRef: d.HostRef) => {
     endPostUpdate();
 
     if (BUILD.asyncLoading) {
-      hostRef.$onReadyResolve$(new WeakRef(elm));
+      hostRef.$onReadyResolve$(elm);
       if (!ancestorComponent) {
         appDidLoad(tagName);
       }
