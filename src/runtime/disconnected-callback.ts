@@ -41,7 +41,7 @@ export const disconnectedCallback = async (elm: d.HostElement) => {
     clearHostRef(elm);
 
     if (BUILD.lazyLoad) {
-      clearHostRef(hostRef?.$lazyInstance$.deref())
+      clearHostRef(hostRef?.$lazyInstance$.deref());
     }
   }
 };

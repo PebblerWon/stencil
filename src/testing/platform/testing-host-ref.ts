@@ -14,7 +14,7 @@ export const getHostRef = (elm: d.RuntimeRef | undefined): d.HostRef | undefined
 
 export const clearHostRef = (elm: d.RuntimeRef) => {
   hostRefs.delete(elm);
-}
+};
 
 /**
  * Add the provided `hostRef` instance to the global {@link hostRefs} map, using the provided `lazyInstance` as a key.

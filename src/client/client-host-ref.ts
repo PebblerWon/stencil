@@ -36,7 +36,7 @@ export const getHostRef = (ref: d.RuntimeRef): d.HostRef | undefined => hostRefs
  */
 export const clearHostRef = (ref: d.RuntimeRef) => {
   hostRefs.delete(ref);
-}
+};
 
 /**
  * Register a lazy instance with the {@link hostRefs} object so it's
