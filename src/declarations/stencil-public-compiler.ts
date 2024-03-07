@@ -63,6 +63,7 @@ export interface StencilConfig {
    * ```
    *
    * Will result in the following file structure:
+   *
    * ```tree
    * stencil-project-root
    * └── .cache
@@ -1766,7 +1767,7 @@ export interface JestConfig {
   /**
    * The directory where Jest should store its cached dependency information. Jest attempts to scan your dependency tree once (up-front)
    * and cache it in order to ease some of the filesystem raking that needs to happen while running tests. This config option lets you
-   * customize where Jest stores that cache data on disk. Default: "/tmp/<path>"
+   * customize where Jest stores that cache data on disk. Default: `"/tmp/<path>"`
    */
   cacheDirectory?: string;
 
@@ -1797,9 +1798,9 @@ export interface JestConfig {
   /**
    * An array of regexp pattern strings that are matched against all file paths before executing the test. If the file path matches
    * any of the patterns, coverage information will be skipped. These pattern strings match against the full path.
-   * Use the <rootDir> string token to include the path to your project's root directory to prevent it from accidentally
+   * Use the `<rootDir>` string token to include the path to your project's root directory to prevent it from accidentally
    * ignoring all of your files in different environments that may have different root directories.
-   * Example: ["<rootDir>/build/", "<rootDir>/node_modules/"]. Default: ["/node_modules/"]
+   * Example: `["<rootDir>/build/", "<rootDir>/node_modules/"]`. Default: ["/node_modules/"]
    */
   coveragePathIgnorePatterns?: any[];
 

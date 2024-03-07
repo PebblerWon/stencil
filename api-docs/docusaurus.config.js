@@ -15,7 +15,7 @@ module.exports = {
     ]
   ],
   markdown: {
-    format: 'md',
+    format: 'detect',
   },
   // presets: [
   //   [
