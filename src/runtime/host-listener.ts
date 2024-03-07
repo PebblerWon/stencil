@@ -10,7 +10,9 @@ export const addHostEventListeners = (
   listeners: d.ComponentRuntimeHostListener[],
   attachParentListeners: boolean,
 ) => {
+  console.log(`tring to addHostEventListeners, ${BUILD.hostListener}, ${listeners}`);
   if (BUILD.hostListener && listeners) {
+    console.log('adding event listener to', elm);
     // this is called immediately within the element's constructor
     // initialize our event listeners on the host element
     // we do this now so that we can listen to events that may

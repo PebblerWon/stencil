@@ -21,15 +21,12 @@ export const disconnectedCallback = async (elm: d.HostElement) => {
     if (BUILD.hostListener) {
       if (hostRef.$rmListeners$) {
         hostRef.$rmListeners$.map((rmListener) => rmListener());
+        console.log(hostRef.$rmListeners$);
         hostRef.$rmListeners$ = undefined;
       }
     }
+    console.log(hostRef.$rmListeners$);
 
-    if (BUILD.state) {
-      if (hostRef.$instanceValues$) {
-        hostRef.$instanceValues$ = null;
-      }
-    }
 
     if (!BUILD.lazyLoad) {
       disconnectInstance(elm);
@@ -38,10 +35,11 @@ export const disconnectedCallback = async (elm: d.HostElement) => {
     } else if (hostRef?.$onReadyPromise$) {
       hostRef.$onReadyPromise$.then(() => disconnectInstance(hostRef.$lazyInstance$.deref()));
     }
-    clearHostRef(elm);
 
-    if (BUILD.lazyLoad) {
-      clearHostRef(hostRef?.$lazyInstance$.deref());
-    }
+    // clear host refs to deal with memory leaks
+    // clearHostRef(elm);
+    // if (BUILD.lazyLoad) {
+    //   clearHostRef(hostRef?.$lazyInstance$.deref());
+    // }
   }
 };
