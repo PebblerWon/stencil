@@ -4,14 +4,18 @@
   "description": "API documentation for @stencil/core",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "docusaurus start --no-open",
+    "build": "docusaurus build"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@docusaurus/core": "^3.1.1",
+    "@docusaurus/preset-classic": "^3.1.1",
     "@ionic-docs/preset-classic": "^1.1.5",
+    "clsx": "^2.1.0",
     "docusaurus-plugin-typedoc": "^0.22.0",
+    "prism-react-renderer": "^2.3.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "typedoc": "^0.25.11",

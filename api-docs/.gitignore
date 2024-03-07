@@ -1,0 +1,6 @@
+# the typedoc docusaurus plugin writes a bunch of markdown to disk in here
+# which we don't want to keep under version control
+docs/
+# docusaurus build output
+build/
+.docusaurus
