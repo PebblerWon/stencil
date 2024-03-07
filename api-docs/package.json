@@ -1,0 +1,24 @@
+{
+  "name": "api-docs",
+  "version": "1.0.0",
+  "description": "API documentation for @stencil/core",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@docusaurus/core": "^3.1.1",
+    "@ionic-docs/preset-classic": "^1.1.5",
+    "docusaurus-plugin-typedoc": "^0.22.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typedoc": "^0.25.11",
+    "typedoc-plugin-markdown": "^3.17.1"
+  },
+  "volta": {
+    "node": "20.11.1",
+    "npm": "10.5.0"
+  }
+}
