@@ -2658,6 +2658,7 @@ export interface OptimizeCssOutput {
 export interface OptimizeJsInput {
   input: string;
   filePath?: string;
+  // TODO(MARKED)
   target?: 'es5' | 'latest';
   pretty?: boolean;
   sourceMap?: boolean;
@@ -2813,6 +2814,7 @@ export interface TranspileOptions {
    * Set to `null` to not include the querystring parameters. Default is `queryparams`.
    */
   styleImportData?: 'queryparams' | string | undefined;
+  // TODO(MARKED): The fun just don't stop.
   /**
    * The JavaScript source target TypeScript should to transpile to. Values can be
    * `latest`, `esnext`, `es2017`, `es2015`, or `es5`. Defaults to `latest`.
@@ -2846,6 +2848,7 @@ export interface TranspileOptions {
   transformAliasedImportPaths?: boolean;
 }
 
+// TODO(MARKED)
 export type CompileTarget =
   | 'latest'
   | 'esnext'
@@ -2880,10 +2883,12 @@ export interface TransformOptions {
   proxy: 'defineproperty' | null;
   style: 'static' | null;
   styleImportData: 'queryparams' | null;
+  // TODO(MARKED): UNKNOWN WHAT YOU ARE
   target?: string;
 }
 
 export interface CompileScriptMinifyOptions {
+  // TODO(MARKED)
   target?: CompileTarget;
   pretty?: boolean;
 }

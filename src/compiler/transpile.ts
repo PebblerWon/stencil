@@ -15,6 +15,7 @@ import { patchTypescript } from './sys/typescript/typescript-sys';
 import { getPublicCompilerMeta } from './transformers/add-component-meta-static';
 import { transpileModule } from './transpile/transpile-module';
 
+// TODO(MARKED)
 /**
  * The `transpile()` function inputs source code as a string, with various options
  * within the second argument. The function is stateless and returns a `Promise` of the

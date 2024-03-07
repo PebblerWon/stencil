@@ -1,0 +1,133 @@
+diff --git a/src/compiler/config/transpile-options.ts b/src/compiler/config/transpile-options.ts
+index dba0e845f..3045e11c3 100644
+--- a/src/compiler/config/transpile-options.ts
++++ b/src/compiler/config/transpile-options.ts
+@@ -79,7 +79,7 @@ export const getTranspileConfig = (input: TranspileOptions): TranspileConfig =>
+ 
+   const tsCompilerOptions: CompilerOptions = {
+     // ensure we uses legacy decorators
+-    experimentalDecorators: true,
++    experimentalDecorators: false,
+ 
+     // best we always set this to true
+     allowSyntheticDefaultImports: true,
+diff --git a/src/compiler/sys/typescript/typescript-config.ts b/src/compiler/sys/typescript/typescript-config.ts
+index 55c20c10b..c4d08aa83 100644
+--- a/src/compiler/sys/typescript/typescript-config.ts
++++ b/src/compiler/sys/typescript/typescript-config.ts
+@@ -165,7 +165,7 @@ const createDefaultTsConfig = (config: d.ValidatedConfig) =>
+     {
+       compilerOptions: {
+         allowSyntheticDefaultImports: true,
+-        experimentalDecorators: true,
++        experimentalDecorators: false,
+         lib: ['dom', 'es2015'],
+         moduleResolution: 'node',
+         module: 'esnext',
+diff --git a/src/compiler/transformers/test/transpile.ts b/src/compiler/transformers/test/transpile.ts
+index 48bd4b741..93158519a 100644
+--- a/src/compiler/transformers/test/transpile.ts
++++ b/src/compiler/transformers/test/transpile.ts
+@@ -38,7 +38,7 @@ export function transpileModule(
+     composite: undefined,
+     declaration: undefined,
+     declarationDir: undefined,
+-    experimentalDecorators: true,
++    experimentalDecorators: false,
+     isolatedModules: true,
+     jsx: ts.JsxEmit.React,
+     jsxFactory: 'h',
+diff --git a/src/compiler/transpile/ts-config.ts b/src/compiler/transpile/ts-config.ts
+index 64cbce170..f5c7f383d 100644
+--- a/src/compiler/transpile/ts-config.ts
++++ b/src/compiler/transpile/ts-config.ts
+@@ -22,7 +22,7 @@ import type * as d from '../../declarations';
+  */
+ export const getTsOptionsToExtend = (config: d.ValidatedConfig): ts.CompilerOptions => {
+   const tsOptions: ts.CompilerOptions = {
+-    experimentalDecorators: true,
++    experimentalDecorators: false,
+     // if the `DIST_TYPES` output target is present then we'd like to emit
+     // declaration files
+     declaration: config.outputTargets.some(isOutputTargetDistTypes),
+diff --git a/src/declarations/stencil-public-runtime.ts b/src/declarations/stencil-public-runtime.ts
+index 259604397..6f7f4c940 100644
+--- a/src/declarations/stencil-public-runtime.ts
++++ b/src/declarations/stencil-public-runtime.ts
+@@ -1,3 +1,56 @@
++// renamed to not collide with legacy `ClassDecorator` type
++// Generic added to handle `new()` functions in classes
++type ClazzDecorator = <T extends Function>(value: T, context: {
++  kind: "class";
++  name: string | undefined;
++  addInitializer(initializer: () => void): void;
++}) => T | void;
++
++type ClassMethodDecorator = <T extends Function>(value: T, context: {
++  kind: "method";
++  name: string | symbol;
++  // `args` added to get
++  access: { get(...args: any[]): unknown };
++  static: boolean;
++  private: boolean;
++  addInitializer(initializer: () => void): void;
++}) => T | void;
++
++type ClassFieldDecorator = (value: undefined, context: {
++  kind: "field";
++  name: string | symbol;
++  // Typings of `get` and `set` updated to include `args` and `self
++  access: { get(...args: any[]): any, set(self: any, value: unknown): void };
++  static: boolean;
++  private: boolean;
++  addInitializer(initializer: () => void): void;
++// return type updated to `any`
++}) => any;
++
++
++interface EsClassDecorator {
++  (opts?: any): ClazzDecorator;
++}
++export declare const EsComponent: EsClassDecorator;
++
++interface EsMethodDecorator {
++  (opts?: any): ClassMethodDecorator
++}
++export declare const EsListen: EsMethodDecorator;
++export declare const EsMethod: EsMethodDecorator;
++export declare const EsWatch: EsMethodDecorator;
++
++interface EsPropDecorator {
++  (opts?: any): ClassFieldDecorator;
++}
++export declare const EsAttachInternals: EsPropDecorator;
++// renamed to play nicely with the TS Playground - collides with global `Element`
++export declare const EsStencilElement: EsPropDecorator;
++// renamed to play nicely with the TS Playground - collides with global `Event`
++export declare const EsStencilEvent: EsPropDecorator;
++export declare const EsProp: EsPropDecorator;
++export declare const EsState: EsPropDecorator;
++
+ declare type CustomMethodDecorator<T> = (
+   target: Object,
+   propertyKey: string | symbol,
+diff --git a/src/internal/stencil-core/index.d.ts b/src/internal/stencil-core/index.d.ts
+index 54d2c8422..21d5b386f 100644
+--- a/src/internal/stencil-core/index.d.ts
++++ b/src/internal/stencil-core/index.d.ts
+@@ -28,6 +28,15 @@ export {
+   Component,
+   Element,
+   Env,
++  EsAttachInternals,
++  EsComponent,
++  EsListen,
++  EsMethod,
++  EsProp,
++  EsState,
++  EsStencilElement,
++  EsStencilEvent,
++  EsWatch,
+   Event,
+   forceUpdate,
+   Fragment,

@@ -99,6 +99,7 @@ export const getTranspileConfig = (input: TranspileOptions): TranspileConfig => 
     // Filename can be non-ts file.
     allowNonTsExtensions: true,
 
+    // TODO(MARKED): Just good to know
     // We are not returning a sourceFile for lib file when asked by the program,
     // so pass --noLib to avoid reporting a file not found error.
     noLib: true,
@@ -192,4 +193,5 @@ const VALID_MODULE = new Set(['cjs', 'esm']);
 const VALID_PROXY = new Set(['defineproperty', null]);
 const VALID_STYLE = new Set(['static']);
 const VALID_STYLE_IMPORT_DATA = new Set(['queryparams']);
+// TODO(MARKED): Oh goody
 const VALID_TARGET = new Set(['latest', 'esnext', 'es2020', 'es2019', 'es2018', 'es2017', 'es2016', 'es2015', 'es5']);

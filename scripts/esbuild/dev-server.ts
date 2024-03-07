@@ -204,9 +204,9 @@ function clientConnectorPlugin(opts: BuildOptions): Plugin {
           throw "Couldn't find build result!";
         }
         let code = Buffer.from(bundle.contents).toString();
-
         const tsResults = ts.transpileModule(code, {
           compilerOptions: {
+            // target ES5, as Stencil supports running the dev server in ES5 environments
             target: ts.ScriptTarget.ES5,
           },
         });

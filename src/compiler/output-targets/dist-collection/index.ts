@@ -61,6 +61,7 @@ export const outputCollection = async (
             const { outputText } = ts.transpileModule(code, {
               fileName: mod.sourceFilePath,
               compilerOptions: {
+                // TODO(MARKED)
                 target: ts.ScriptTarget.Latest,
               },
               transformers: {

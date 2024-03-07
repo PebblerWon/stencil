@@ -65,6 +65,7 @@ export function transpileModule(
   config = config || mockValidatedConfig();
   compilerCtx = compilerCtx || mockCompilerCtx(config);
 
+  // TODO(MARKED)
   const sourceFile = ts.createSourceFile(inputFileName, input, options.target);
 
   let outputText: string;

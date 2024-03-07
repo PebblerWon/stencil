@@ -14,6 +14,7 @@ export function transpile(input: string, opts: TranspileOptions = {}): Transpile
     sourceMap: 'inline',
     style: null,
     styleImportData: 'queryparams',
+    // TODO(MARKED)
     target: 'es2015', // default to es2015
     transformAliasedImportPaths: parseStencilTranspilePaths(process.env.__STENCIL_TRANSPILE_PATHS__),
   };
@@ -22,6 +23,7 @@ export function transpile(input: string, opts: TranspileOptions = {}): Transpile
     const v = process.versions.node.split('.');
     if (parseInt(v[0], 10) >= 10) {
       // let's go with ES2017 for node 10 and above
+      // TODO(MARKED)
       opts.target = 'es2017';
     }
   } catch (e) {}

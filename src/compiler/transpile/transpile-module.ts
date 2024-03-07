@@ -81,6 +81,7 @@ export const transpileModule = (
     tsCompilerOptions.baseUrl = '.';
   }
 
+  // TODO(MARKED)
   const sourceFile = ts.createSourceFile(sourceFilePath, input, tsCompilerOptions.target);
 
   // Create a compilerHost object to allow the compiler to read and write files
@@ -161,6 +162,7 @@ export const transpileModule = (
   return results;
 };
 
+// TODO(MARKED)
 const getScriptTargetKind = (transformOpts: d.TransformOptions) => {
   const target = transformOpts.target && transformOpts.target.toUpperCase();
   if (isNumber((ts.ScriptTarget as any)[target])) {

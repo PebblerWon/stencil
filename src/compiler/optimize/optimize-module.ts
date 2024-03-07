@@ -218,6 +218,7 @@ export const prepareModule = async (
       compilerOptions: {
         sourceMap: !!minifyOpts.sourceMap,
         allowJs: true,
+        // TODO(MARKED)
         target: ts.ScriptTarget.ES5,
         module: ts.ModuleKind.ESNext,
         removeComments: false,

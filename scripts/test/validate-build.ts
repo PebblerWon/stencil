@@ -238,6 +238,7 @@ function validateDts(opts: BuildOptions, dtsEntries: string[]): void {
       '@stencil/core/internal/testing': [join(opts.rootDir, 'internal', 'testing', 'index.d.ts')],
     },
     moduleResolution: ModuleResolutionKind.NodeJs,
+    // TODO(MARKED)
     target: ScriptTarget.ES2016,
   });
 
@@ -284,6 +285,7 @@ async function validateCompiler(opts: BuildOptions): Promise<void> {
   });
   console.log(`${compiler.vermoji}  Validated compiler: ${compiler.version}`);
 
+  // TODO(MARKED)
   const transpileResults = compiler.transpileSync('const m: string = `transpile!`;', {
     target: 'es5',
   });

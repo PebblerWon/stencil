@@ -167,9 +167,9 @@ export async function devServer(opts: BuildOptions) {
         async generateBundle(_options, bundle) {
           if (bundle[connectorName]) {
             let code = (bundle[connectorName] as OutputChunk).code;
-
             const tsResults = ts.transpileModule(code, {
               compilerOptions: {
+                // target ES5, as Stencil supports running the dev server in ES5 environments
                 target: ts.ScriptTarget.ES5,
               },
             });

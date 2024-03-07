@@ -94,6 +94,7 @@ export const validateTsConfig = async (config: d.ValidatedConfig, sys: d.Compile
         if (results.options) {
           tsconfig.compilerOptions = results.options;
 
+          // TODO(MARKED): This section
           const target = tsconfig.compilerOptions.target ?? ts.ScriptTarget.ES5;
           if (
             [ts.ScriptTarget.ES3, ts.ScriptTarget.ES5, ts.ScriptTarget.ES2015, ts.ScriptTarget.ES2016].includes(target)
@@ -169,6 +170,7 @@ const createDefaultTsConfig = (config: d.ValidatedConfig) =>
         lib: ['dom', 'es2015'],
         moduleResolution: 'node',
         module: 'esnext',
+        // TODO(MARKED)
         target: 'es2017',
         jsx: 'react',
         jsxFactory: 'h',

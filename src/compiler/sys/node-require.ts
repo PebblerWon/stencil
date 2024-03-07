@@ -33,6 +33,7 @@ export const nodeRequire = (id: string) => {
             module: ts.ModuleKind.CommonJS,
             moduleResolution: ts.ModuleResolutionKind.NodeJs,
             esModuleInterop: true,
+            // TODO(MARKED)
             target: ts.ScriptTarget.ES2017,
             allowJs: true,
           },

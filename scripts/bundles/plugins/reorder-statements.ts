@@ -69,6 +69,7 @@ function reorderStatements(code: string) {
     return false;
   }
 
+  // TODO(MARKED)
   const output = ts.transpileModule(code, {
     compilerOptions: {
       module: ts.ModuleKind.ESNext,

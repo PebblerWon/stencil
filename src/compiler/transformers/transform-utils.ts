@@ -5,6 +5,7 @@ import type * as d from '../../declarations';
 import { MEMBER_DECORATORS_TO_REMOVE, StencilStaticGetter } from './decorators-to-static/decorators-constants';
 import { addToLibrary, findTypeWithName, getHomeModule, getOriginalTypeName } from './type-library';
 
+// TODO(MARKED)
 export const getScriptTarget = () => {
   // using a fn so the browser compiler doesn't require the global ts for startup
   return ts.ScriptTarget.ES2017;

@@ -297,6 +297,7 @@ export const filterDecorators = (
   return decorators;
 };
 
+// TODO(MARKED)
 /**
  * This updates a Stencil component class declaration AST node to handle any
  * class fields with Stencil-specific decorators (`@State`, `@Prop`, etc). For
