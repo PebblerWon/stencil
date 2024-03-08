@@ -384,7 +384,7 @@ const removeVnodes = (vnodes: d.VNode[], startIdx: number, endIdx: number) => {
  * @param newCh the new children of the parent node
  * @param isInitialRender whether or not this is the first render of the vdom
  */
-export const updateChildren = (
+const updateChildren = (
   parentElm: d.RenderNode,
   oldCh: d.VNode[],
   newVNode: d.VNode,
