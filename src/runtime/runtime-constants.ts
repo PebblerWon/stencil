@@ -18,8 +18,19 @@ export const enum VNODE_FLAGS {
   isHost = 1 << 2,
 }
 
+/**
+ *
+ *
+ * Because these are bit flags, these fields are not mutually exclusive.
+ */
 export const enum PROXY_FLAGS {
+  /**
+   * Used for the construction of the custom element that is placed in the DOM
+   */
   isElementConstructor = 1 << 0,
+  /**
+   *
+   */
   proxyState = 1 << 1,
 }
 

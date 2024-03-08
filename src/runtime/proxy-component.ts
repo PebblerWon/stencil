@@ -14,7 +14,7 @@ import { getValue, setValue } from './set-value';
  *
  * @param Cstr the constructor for a component that we need to process
  * @param cmpMeta metadata collected previously about the component
- * @param flags a number used to store a series of bit flags
+ * @param flags a number used to store a series of bit flags corresponding to {@link PROXY_FLAGS}
  * @returns a reference to the same constructor passed in (but now mutated)
  */
 export const proxyComponent = (
@@ -22,6 +22,7 @@ export const proxyComponent = (
   cmpMeta: d.ComponentRuntimeMeta,
   flags: number,
 ): d.ComponentConstructor => {
+  console.trace((Cstr as any).name, flags);
   const prototype = (Cstr as any).prototype;
 
   /**
@@ -216,6 +217,14 @@ export const proxyComponent = (
       );
     }
   }
+
+  console.trace(BUILD.getter, cmpMeta.$getters$);
+  // cmpMeta.$flags$ & CMP_FLAGS.getter && flags & PROXY_FLAGS.isElementConstructor
+  // if (BUILD.getter && cmpMeta.$getters$) {
+  Object.defineProperty(prototype, 'foo', {
+    get: () => 42,
+  });
+  // }
 
   return Cstr;
 };

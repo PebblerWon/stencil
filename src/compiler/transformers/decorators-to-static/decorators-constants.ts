@@ -56,6 +56,7 @@ export const STATIC_GETTER_NAMES = [
   'encapsulation',
   'events',
   'formAssociated',
+  'getters',
   'is',
   'listeners',
   'methods',

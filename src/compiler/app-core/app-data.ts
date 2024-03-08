@@ -38,6 +38,7 @@ export const getBuildFeatures = (cmps: ComponentCompilerMeta[]): BuildFeatures =
     disconnectedCallback: cmps.some((c) => c.hasDisconnectedCallbackFn),
     element: cmps.some((c) => c.hasElement),
     event: cmps.some((c) => c.hasEvent),
+    getter: cmps.some((c) => c.hasGetter),
     hasRenderFn: cmps.some((c) => c.hasRenderFn),
     lifecycle: cmps.some((c) => c.hasLifecycle),
     asyncLoading: false,

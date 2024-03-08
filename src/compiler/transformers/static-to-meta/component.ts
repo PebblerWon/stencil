@@ -13,6 +13,7 @@ import { parseStaticElementRef } from './element-ref';
 import { parseStaticEncapsulation, parseStaticShadowDelegatesFocus } from './encapsulation';
 import { parseStaticEvents } from './events';
 import { parseFormAssociated } from './form-associated';
+import { parseStaticGetters } from './getters';
 import { parseStaticListeners } from './listeners';
 import { parseStaticMethods } from './methods';
 import { parseStaticProps } from './props';
@@ -76,6 +77,7 @@ export const parseStaticComponentMeta = (
     properties: parseStaticProps(staticMembers),
     virtualProperties: parseVirtualProps(docs),
     states: parseStaticStates(staticMembers),
+    getters: parseStaticGetters(staticMembers),
     methods: parseStaticMethods(staticMembers),
     listeners: parseStaticListeners(staticMembers),
     events: parseStaticEvents(staticMembers),
@@ -102,6 +104,7 @@ export const parseStaticComponentMeta = (
     hasDisconnectedCallbackFn: false,
     hasElement: false,
     hasEvent: false,
+    hasGetter: false,
     hasLifecycle: false,
     hasListener: false,
     hasListenerTarget: false,

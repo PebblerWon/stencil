@@ -6,6 +6,13 @@ import type * as d from '../declarations';
 import { parsePropertyValue } from './parse-property-value';
 import { scheduleUpdate } from './update-component';
 
+/**
+ * Retrieve the value of the provided `propName` from the {@link d.HostRef} linked to the provided `ref`
+ * @param ref the runtime reference that is used to determine the host ref
+ * @param propName the property name whose value is retrieved
+ * @returns the value associated with the provided property name on found host ref. Returns `undefined` if the host ref
+ * cannot be found or if the property name does not exist on the host ref
+ */
 export const getValue = (ref: d.RuntimeRef, propName: string) => getHostRef(ref).$instanceValues$.get(propName);
 
 export const setValue = (ref: d.RuntimeRef, propName: string, newVal: any, cmpMeta: d.ComponentRuntimeMeta) => {

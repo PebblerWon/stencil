@@ -18,6 +18,7 @@ import {
 } from './decorators-constants';
 import { elementDecoratorsToStatic } from './element-decorator';
 import { eventDecoratorsToStatic } from './event-decorator';
+import { gettersToStatic } from './getters';
 import { ImportAliasMap } from './import-alias-map';
 import { listenDecoratorsToStatic } from './listen-decorator';
 import { methodDecoratorsToStatic, validateMethods } from './method-decorator';
@@ -115,7 +116,7 @@ const visitClassDeclaration = (
   // parse component decorator
   componentDecoratorToStatic(config, typeChecker, diagnostics, classNode, filteredMethodsAndFields, componentDecorator);
 
-  // stores a reference to fields that should be watched for changes
+  gettersToStatic(diagnostics, classNode, decoratedMembers, typeChecker, program, filteredMethodsAndFields); // stores a reference to fields that should be watched for changes
   // parse member decorators (Prop, State, Listen, Event, Method, Element and Watch)
   if (decoratedMembers.length > 0) {
     propDecoratorsToStatic(

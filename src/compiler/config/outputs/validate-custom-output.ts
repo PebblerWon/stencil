@@ -7,7 +7,7 @@ export const validateCustomOutput = (
   diagnostics: d.Diagnostic[],
   userOutputs: d.OutputTarget[],
 ) => {
-  return userOutputs.filter(isOutputTargetCustom).map((o) => {
+  return userOutputs.filter(isOutputTargetCustom).map((o: d.OutputTargetCustom) => {
     if (o.validate) {
       const localDiagnostics: d.Diagnostic[] = [];
       try {

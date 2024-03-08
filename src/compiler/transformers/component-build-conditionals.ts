@@ -38,6 +38,10 @@ export const setComponentBuildConditionals = (cmpMeta: d.ComponentCompilerMeta) 
     cmpMeta.hasListenerTarget = cmpMeta.listeners.some((l) => !!l.target);
   }
 
+  if (cmpMeta.getters.length > 0) {
+    cmpMeta.hasGetter = true;
+  }
+
   cmpMeta.hasMember =
     cmpMeta.hasProp || cmpMeta.hasState || cmpMeta.hasElement || cmpMeta.hasMethod || cmpMeta.formAssociated;
 

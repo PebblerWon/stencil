@@ -134,6 +134,7 @@ export interface BuildFeatures {
   propBoolean: boolean;
   propNumber: boolean;
   propString: boolean;
+  getter: boolean;
 
   // lifecycle events
   lifecycle: boolean;
@@ -542,6 +543,10 @@ export interface ComponentCompilerFeatures {
   hasDisconnectedCallbackFn: boolean;
   hasElement: boolean;
   hasEvent: boolean;
+  /**
+   * Does the component's class has one or more getter(s)?
+   */
+  hasGetter: boolean;
   hasLifecycle: boolean;
   hasListener: boolean;
   hasListenerTarget: boolean;
@@ -639,6 +644,7 @@ export interface ComponentCompilerMeta extends ComponentCompilerFeatures {
   formAssociated: boolean;
   internal: boolean;
   isCollectionDependency: boolean;
+  getters: ComponentCompilerMethod[];
   jsFilePath: string;
   listeners: ComponentCompilerListener[];
   methods: ComponentCompilerMethod[];
@@ -1449,6 +1455,7 @@ export interface ComponentRuntimeMeta {
    * documented in the {@link CMP_FLAGS} enum.
    */
   $flags$: number;
+  $getters$?: [number, string];
   /**
    * Just what it says on the tin - the tag name for the component, as set in
    * the `@Component` decorator.
@@ -1536,6 +1543,9 @@ export interface HostRef {
   $flags$: number;
   $cmpMeta$: ComponentRuntimeMeta;
   $hostElement$: HostElement;
+  /**
+   * A mapping of decorated Stencil class members (e.g. `@Prop()`, `@State()`) to their value
+   */
   $instanceValues$?: Map<string, any>;
   $lazyInstance$?: ComponentInterface;
   /**

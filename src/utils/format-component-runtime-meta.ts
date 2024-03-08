@@ -42,12 +42,14 @@ export const formatComponentRuntimeMeta = (
   const members = formatComponentRuntimeMembers(compilerMeta, includeMethods);
   const hostListeners = formatHostListeners(compilerMeta);
   const watchers = formatComponentRuntimeWatchers(compilerMeta);
+  const getters: any[] = []; // TODO
   return trimFalsy([
     flags,
     compilerMeta.tagName,
     Object.keys(members).length > 0 ? members : undefined,
     hostListeners.length > 0 ? hostListeners : undefined,
     Object.keys(watchers).length > 0 ? watchers : undefined,
+    Object.keys(getters).length > 0 ? getters : undefined,
   ]);
 };
 
