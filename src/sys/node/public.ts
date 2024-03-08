@@ -2,9 +2,9 @@ import type { CompilerSystem, Logger } from '@stencil/core/internal';
 
 /**
  * Creates a {@link Logger}, based off of NodeJS APIs, that will be used by the
-* compiler and dev-server. The NodeJS "process" object must be provided as a
-* property in the first argument's object.
-  *
+ * compiler and dev-server. The NodeJS "process" object must be provided as a
+ * property in the first argument's object.
+ *
  * @param c an object containing a `Process` for Stencil to use
  * @returns a {@link Logger} object
  */
