@@ -17,12 +17,6 @@ module.exports = {
   markdown: {
     format: 'detect',
   },
-  // presets: [
-  //   [
-  //     '@ionic-docs/preset-classic',
-  //     {}
-  //   ]
-  // ],
   plugins: [
     [
       'docusaurus-plugin-typedoc',
