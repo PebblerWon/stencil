@@ -39,6 +39,7 @@ module.exports = {
         excludeReferences: true,
         tsconfig: '../tsconfig.json',
         out: ".",
+        readme: "api-docs-landing.md",
         // sidebar: {
         //   // categoryLabel: 'API XYZ',
         //   collapsed: false,
