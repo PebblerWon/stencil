@@ -501,10 +501,16 @@ type StrictConfigFields = keyof Pick<
 >;
 
 /**
- * A version of {@link Config} that makes certain fields required. This type represents a valid configuration entity.
- * When a configuration is received by the user, it is a bag of unverified data. In order to make stricter guarantees
- * about the data from a type-safety perspective, this type is intended to be used throughout the codebase once
- * validations have occurred at runtime.
+ * A version of {@link Config} that makes certain fields required. This type
+ * represents a valid configuration entity. When a configuration is received by
+ * the user, it is a bag of unverified data. In order to make stricter
+ * guarantees about the data from a type-safety perspective, this type is
+ * intended to be used throughout the codebase once validations have occurred at
+ * runtime.
+ *
+ * For this type all of the fields in {@link StrictConfigFields} are marked as
+ * non-option (via {@link RequireFields}) but otherwise have the same type as
+ * they do on {@link Config}.
  */
 export type ValidatedConfig = RequireFields<Config, StrictConfigFields>;
 
