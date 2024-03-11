@@ -45,7 +45,6 @@ xdescribe('component-styles', () => {
     config.sys = sys;
     compiler = await createCompiler(config);
 
-    // TODO(MARKED)
     // const testingConfig = mockConfig(sys);
     // testingConfig.rootDir = '/';
     // testingConfig.cwd = '/';

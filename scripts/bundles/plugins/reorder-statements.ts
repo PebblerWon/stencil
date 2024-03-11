@@ -69,10 +69,10 @@ function reorderStatements(code: string) {
     return false;
   }
 
-  // TODO(MARKED)
   const output = ts.transpileModule(code, {
     compilerOptions: {
       module: ts.ModuleKind.ESNext,
+      // By default, recompile the module with ES2017
       target: ts.ScriptTarget.ES2017,
     },
     transformers: {

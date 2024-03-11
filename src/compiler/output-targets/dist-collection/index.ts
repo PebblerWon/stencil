@@ -9,11 +9,11 @@ import {
   relative,
   sortBy,
 } from '@utils';
-import ts from 'typescript';
+import ts, {JsxEmit} from 'typescript';
 
 import type * as d from '../../../declarations';
-import { typescriptVersion, version } from '../../../version';
-import { mapImportsToPathAliases } from '../../transformers/map-imports-to-path-aliases';
+import {typescriptVersion, version} from '../../../version';
+import {mapImportsToPathAliases} from '../../transformers/map-imports-to-path-aliases';
 
 /**
  * Main output target function for `dist-collection`. This function takes the compiled output from a
@@ -58,16 +58,20 @@ export const outputCollection = async (
             // We run this even if the transformer will perform no action
             // to avoid race conditions between multiple output targets that
             // may be writing to the same location
+            console.log(code)
+            console.log('-----')
             const { outputText } = ts.transpileModule(code, {
               fileName: mod.sourceFilePath,
               compilerOptions: {
                 // TODO(MARKED)
+                jsx: JsxEmit.Preserve,
                 target: ts.ScriptTarget.Latest,
               },
               transformers: {
                 after: [mapImportsToPathAliases(config, filePath, target)],
               },
             });
+            console.log(outputText)
 
             await compilerCtx.fs.writeFile(filePath, outputText, { outputTargetType: target.type });
 
