@@ -220,11 +220,23 @@ export const proxyComponent = (
 
   console.trace(BUILD.getter, cmpMeta.$getters$);
   // cmpMeta.$flags$ & CMP_FLAGS.getter && flags & PROXY_FLAGS.isElementConstructor
-  // if (BUILD.getter && cmpMeta.$getters$) {
-  Object.defineProperty(prototype, 'foo', {
-    get: () => 42,
-  });
-  // }
+  if (BUILD.getter && cmpMeta.$getters$) {
+    Object.keys(cmpMeta.$getters$).forEach((getter) => {
+      Object.defineProperty(prototype, getter, {
+        value(this: d.HostElement, ...args: any[]) {
+          console.log(this,args.length);
+          args?.forEach((arg, idx) => console.log(idx, arg))
+          // @ts-ignore
+          const hostRef = getHostRef(this);
+          // const elm = BUILD.lazyLoad ? hostRef.$hostElement$ : this;
+          // const instance = BUILD.lazyLoad ? hostRef.$lazyInstance$ : (elm as any);
+          //   if (instance[getter] != null) {
+          //     instance[getter].call(instance);
+          //   }
+        }
+      });
+    });
+  }
 
   return Cstr;
 };

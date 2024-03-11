@@ -42,7 +42,7 @@ export const formatComponentRuntimeMeta = (
   const members = formatComponentRuntimeMembers(compilerMeta, includeMethods);
   const hostListeners = formatHostListeners(compilerMeta);
   const watchers = formatComponentRuntimeWatchers(compilerMeta);
-  const getters: any[] = []; // TODO
+  const getters = formatComponentRuntimeGetters(compilerMeta);
   return trimFalsy([
     flags,
     compilerMeta.tagName,
@@ -61,6 +61,17 @@ export const stringifyRuntimeData = (data: any) => {
     return `JSON.parse(${JSON.stringify(json)})`;
   }
   return json;
+};
+
+const formatComponentRuntimeGetters = (compilerMeta: d.ComponentCompilerMeta) => {
+  const getters: d.ComponentRuntimeMembers = {};
+
+  compilerMeta.getters.forEach((getter) => {
+    // @ts-ignore
+    getters[getter.name] = true;
+  });
+
+  return getters;
 };
 
 /**

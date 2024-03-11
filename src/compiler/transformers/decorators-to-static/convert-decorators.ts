@@ -116,7 +116,7 @@ const visitClassDeclaration = (
   // parse component decorator
   componentDecoratorToStatic(config, typeChecker, diagnostics, classNode, filteredMethodsAndFields, componentDecorator);
 
-  gettersToStatic(diagnostics, classNode, decoratedMembers, typeChecker, program, filteredMethodsAndFields); // stores a reference to fields that should be watched for changes
+  gettersToStatic(diagnostics, classNode, classNode.members, typeChecker, program, filteredMethodsAndFields); // stores a reference to fields that should be watched for changes
   // parse member decorators (Prop, State, Listen, Event, Method, Element and Watch)
   if (decoratedMembers.length > 0) {
     propDecoratorsToStatic(

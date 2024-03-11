@@ -1443,6 +1443,9 @@ export type ComponentRuntimeMetaCompact = [
 
   /** watchers */
   ComponentConstructorWatchers?,
+
+  /** Getters */
+  { [memberName: string]: ComponentRuntimeMember }?,
 ];
 
 /**
@@ -1455,7 +1458,7 @@ export interface ComponentRuntimeMeta {
    * documented in the {@link CMP_FLAGS} enum.
    */
   $flags$: number;
-  $getters$?: [number, string];
+  $getters$?: ComponentRuntimeMembers;
   /**
    * Just what it says on the tin - the tag name for the component, as set in
    * the `@Component` decorator.

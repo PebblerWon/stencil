@@ -14,7 +14,7 @@ import {
 export const gettersToStatic = (
   diagnostics: d.Diagnostic[],
   cmpNode: ts.ClassDeclaration,
-  decoratedProps: ts.ClassElement[],
+  decoratedProps: ts.NodeArray<ts.ClassElement>,
   typeChecker: ts.TypeChecker,
   program: ts.Program,
   newMembers: ts.ClassElement[],

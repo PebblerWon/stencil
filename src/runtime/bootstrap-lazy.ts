@@ -65,6 +65,7 @@ export const bootstrapLazy = (lazyBundles: d.LazyBundlesRuntimeData, options: d.
         $tagName$: compactMeta[1],
         $members$: compactMeta[2],
         $listeners$: compactMeta[3],
+        $getters$: compactMeta[5],
       };
 
       // Check if we are using slots outside the shadow DOM in this component.
@@ -84,6 +85,9 @@ export const bootstrapLazy = (lazyBundles: d.LazyBundlesRuntimeData, options: d.
       }
       if (BUILD.watchCallback) {
         cmpMeta.$watchers$ = compactMeta[4] ?? {};
+      }
+      if (BUILD.getter) {
+        cmpMeta.$getters$ = compactMeta[5]
       }
       if (BUILD.shadowDom && !supportsShadow && cmpMeta.$flags$ & CMP_FLAGS.shadowDomEncapsulation) {
         // TODO(STENCIL-854): Remove code related to legacy shadowDomShim field

@@ -60,6 +60,7 @@ export const registerHost = (hostElement: d.HostElement, cmpMeta: d.ComponentRun
   if (BUILD.isDev) {
     hostRef.$renderCount$ = 0;
   }
+  // TODO() Consider this for getters
   if (BUILD.method && BUILD.lazyLoad) {
     hostRef.$onInstancePromise$ = new Promise((r) => (hostRef.$onInstanceResolve$ = r));
   }
