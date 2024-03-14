@@ -9,7 +9,7 @@ import {
   relative,
   sortBy,
 } from '@utils';
-import ts, {JsxEmit} from 'typescript';
+import ts from 'typescript';
 
 import type * as d from '../../../declarations';
 import {typescriptVersion, version} from '../../../version';
@@ -58,20 +58,18 @@ export const outputCollection = async (
             // We run this even if the transformer will perform no action
             // to avoid race conditions between multiple output targets that
             // may be writing to the same location
-            console.log(code)
-            console.log('-----')
             const { outputText } = ts.transpileModule(code, {
               fileName: mod.sourceFilePath,
               compilerOptions: {
-                // TODO(MARKED)
-                jsx: JsxEmit.Preserve,
+                // Despite the fact we use `Latest` here, the code should not be transpiled to a "lower" or "older",
+                // version of TypeScript, assuming there's no transformer in ESNext/Latest that affects older EMCAScript
+                // output
                 target: ts.ScriptTarget.Latest,
               },
               transformers: {
                 after: [mapImportsToPathAliases(config, filePath, target)],
               },
             });
-            console.log(outputText)
 
             await compilerCtx.fs.writeFile(filePath, outputText, { outputTargetType: target.type });
 

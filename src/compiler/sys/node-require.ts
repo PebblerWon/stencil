@@ -10,6 +10,8 @@ export const nodeRequire = (id: string) => {
     diagnostics: [] as Diagnostic[],
   };
 
+  console.log(`nodeRequire ${id}`)
+
   try {
     const fs: typeof import('fs') = require('fs');
     const path: typeof import('path') = require('path');
