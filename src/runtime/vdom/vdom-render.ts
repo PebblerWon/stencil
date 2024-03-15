@@ -157,7 +157,7 @@ const createElm = (
       elm.deref()['s-sn'] = newVNode.$name$ || '';
 
       // remember the ref callback function
-      elm['s-rf'] = newVNode.$attrs$?.ref;
+      elm.deref()['s-rf'] = newVNode.$attrs$?.ref;
 
       // check if we've got an old vnode for this slot
       oldVNode = oldParentVNode && oldParentVNode.$children$ && oldParentVNode.$children$[childIndex];
