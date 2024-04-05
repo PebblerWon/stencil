@@ -97,7 +97,6 @@ export async function buildCompiler(opts: BuildOptions) {
   const minifiedCompilerBuild = {
     ...compilerEsbuildOptions,
     outfile: join(opts.output.compilerDir, 'stencil.min.js'),
-    minify: true,
   };
 
   // copy typescript default lib dts files

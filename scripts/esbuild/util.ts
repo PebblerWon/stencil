@@ -113,6 +113,7 @@ export function getBaseEsbuildOptions(): ESBuildOptions {
     bundle: true,
     legalComments: 'inline',
     logLevel: 'info',
+    minify: true,
     target: getEsbuildTargets(),
   };
 }

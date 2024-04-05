@@ -49,7 +49,6 @@ export async function buildSysNode(opts: BuildOptions) {
     platform: 'node',
     logLevel: 'info',
     external,
-    minify: true,
     alias: sysNodeAliases,
     banner: { js: getBanner(opts, `Stencil Node System`, true) },
   };
@@ -67,7 +66,6 @@ export async function buildSysNode(opts: BuildOptions) {
     platform: 'node',
     logLevel: 'info',
     external,
-    minify: true,
     alias: sysNodeAliases,
     banner: { js: getBanner(opts, `Stencil Node System Worker`, true) },
   };
